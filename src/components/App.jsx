@@ -1,16 +1,38 @@
-export const App = () => {
+import ContactList from 'components/ContactList/ContactList';
+import Container from './Container/Container';
+// import Filter from 'components/Filter/Filter';
+import ContactForm from 'components/ContactForm/ContactForm';
+// import { useState } from 'react';
+
+// export default function App() {
+//   // const [filter, setFilter] = useState('');
+
+//   // const handleChange = e => {
+//   //   setFilter(e);
+//   // };
+
+//   return (
+//     <Container>
+//       <div>
+//         <div>
+//             <h1>Phonebook</h1>
+//             <ContactForm />
+//             <h2>Contacts</h2>
+//             <ContactList />
+//         </div>
+//     </Container>
+//   );
+// }
+
+export default function App() {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Container>
+      <div>
+        <h1>Phonebook</h1>
+        <ContactForm />
+        <h2>Contacts</h2>
+        <ContactList />
+      </div>
+    </Container>
   );
-};
+}
