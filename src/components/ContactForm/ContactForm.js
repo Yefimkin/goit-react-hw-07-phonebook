@@ -27,10 +27,10 @@ export default function ContactForm() {
     const handleSubmit = e => {
         e.preventDefault();
         const isValidate = AddContact(name);
-        // resetForm();
+        resetForm();
         if (isValidate) return;
         createContact({ name, number });
-        // resetForm();
+        resetForm();
     };
 
     const handleChange = evt => {
@@ -51,10 +51,10 @@ export default function ContactForm() {
         }
     }
 
-    // const resetForm = () => {
-    //     setName('');
-    //     setNumber('');
-    // }
+    const resetForm = () => {
+        setName('');
+        setNumber('');
+    }
     
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
