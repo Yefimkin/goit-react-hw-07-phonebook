@@ -1,41 +1,24 @@
-import { useState, useMemo } from 'react';
-import { useGetContactsQuery, useDeleteContactMutation } from 'redux/contacts/contactsApi';
-import Filter from '../Filter/Filter'
-import styles from './ContactList.module.css';
+import { useSelector } from 'react-redux';
+import s from './ContactsList.module.css';
+import Contact from './Contact/Contact';
 
+function ContactsList() {
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
-
-export default function ContactList() {
-    const { isLoading } = useGetContactsQuery();
-    const [deleteContact] = useDeleteContactMutation();
-    const [filter, setFilter] = useState('');
-    const { data: contacts } = useGetContactsQuery();
-    
-
-    const filterContacts = useMemo(() => {
-        return (
-            contacts?.filter(item =>
-                item.name.toLowerCase().includes(filter.toLowerCase())
-            ) ?? []
-        );
-    }, [filter, contacts]);
-
-
-    return (
-        <div>
-            <Filter filter={filter} onChange={setFilter}/>
-        <ul>
-            {isLoading ? (
-                <b>Loading...</b>
-            ) : (filterContacts.map(contact => {
-                return (
-                    <li key={contact.id} className={styles.li}>
-                        <p>{contact.name}: <span>{contact.phone}</span></p>
-                        <button type="button"onClick={() => deleteContact(contact.id)}>Delete</button>
-                    </li>
-                )
-            }))}
-            </ul>
-         </div>
+  const list = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
     );
-};
+  };
+
+  return (
+    <ul className={s.ContactList}>
+      {list().map(({ name, number, id }, idx) => (
+        <Contact key={id} idx={idx} name={name} number={number} id={id} />
+      ))}
+    </ul>
+  );
+}
+
+export default ContactsList;

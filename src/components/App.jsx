@@ -1,38 +1,22 @@
-import ContactList from 'components/ContactList/ContactList';
+import React from 'react';
+
 import Container from './Container/Container';
-// import Filter from 'components/Filter/Filter';
-import ContactForm from 'components/ContactForm/ContactForm';
-// import { useState } from 'react';
+import ContactForm from './ContactForm/ContactForm';
+import ContactsList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 
-// export default function App() {
-//   // const [filter, setFilter] = useState('');
-
-//   // const handleChange = e => {
-//   //   setFilter(e);
-//   // };
-
-//   return (
-//     <Container>
-//       <div>
-//         <div>
-//             <h1>Phonebook</h1>
-//             <ContactForm />
-//             <h2>Contacts</h2>
-//             <ContactList />
-//         </div>
-//     </Container>
-//   );
-// }
-
-export default function App() {
+function App() {
   return (
-    <Container>
-      <div>
+    <div>
+      <Container>
         <h1>Phonebook</h1>
         <ContactForm />
         <h2>Contacts</h2>
-        <ContactList />
-      </div>
-    </Container>
+        <Filter />
+        <ContactsList />
+      </Container>
+    </div>
   );
 }
+
+export default App;
