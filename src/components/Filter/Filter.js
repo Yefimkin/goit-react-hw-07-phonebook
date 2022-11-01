@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { setFilter } from '../../redux/filterSlice';
 
-
 function Filter() {
   const dispatch = useDispatch();
   const filterValue = useSelector(state => state.filter);
@@ -18,7 +17,6 @@ function Filter() {
     <label htmlFor={filterId}>
       Find contacts by name :
       <input
-        
         id={filterId}
         onChange={onFilterChange}
         value={filterValue}

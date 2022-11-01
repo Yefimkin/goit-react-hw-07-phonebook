@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../redux/contactsSlice';
-import { addContact } from 'redux/acyncThunk';
+import { addContact } from 'redux/asyncThunk';
 import { nanoid } from 'nanoid'
 import Button from '../Button/Button';
 import style from './ContactForm.module.css';
@@ -20,11 +20,8 @@ function ContactForm() {
         setNumber(value);
         break;
       default:
-        setName('')
-        setNumber('')
     }
   };
-
 
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);

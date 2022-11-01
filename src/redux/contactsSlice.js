@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchContacts, addContact, deleteContact } from './acyncThunk';
+import { fetchContacts, addContact, deleteContact } from './asyncThunk';
 
 const initialState = {
   items: [],
@@ -32,7 +32,7 @@ export const contactsSlice = createSlice({
       state.addingLoader = false;
       state.error = null;
       state.items.unshift(payload);
-      alert('ADDED !');
+      alert('Success!');
     },
     [addContact.rejected](state, { payload }) {
       state.addingLoader = false;
@@ -41,7 +41,7 @@ export const contactsSlice = createSlice({
     [deleteContact.fulfilled](state, { payload }) {
       state.error = null;
       state.items = state.items.filter(item => item.id !== payload);
-      alert('DELETED !');
+      alert('Deleted');
     },
     [deleteContact.rejected](state, { payload }) {
       state.error = payload;
@@ -50,26 +50,3 @@ export const contactsSlice = createSlice({
 });
 
 export const getContacts = state => state.contacts;
-
-// const initialState = [
-//   { id: 'id-1', name: 'Annie Copeland', number: '227-91-26' },
-//   { id: 'id-2', name: 'Eden Clements', number: '645-17-79' },
-//   { id: 'id-3', name: 'Hermione Kline', number: '443-89-12' },
-//   { id: 'id-4', name: 'Rosie Simpson', number: '459-12-56' },
-// ];
-
-// export const ContactsSlice = createSlice({
-//   name: 'contacts',
-//   initialState,
-//   reducers: {
-//     addContact(state, action) {
-//       state.unshift({ id: nanoid(), ...action.payload });
-//     },
-
-//     deleteContact(state, action) {
-//       return state.filter(item => item.id !== action.payload);
-//     },
-//   },
-// });
-// export const { addContact, deleteContact } = ContactsSlice.actions;
-// export const getContacts = state => state.contacts;
