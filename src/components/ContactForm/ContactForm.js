@@ -37,16 +37,15 @@ const ContactForm = () => {
             return alert(`${name} ${number} is already in Phonebook`)
         }
 
-        dispatch(addContact({ id, name, number }));
+      dispatch(addContact({ id, name, number }));
+      setName('')
+      setNumber('')
     }
 
     const onFormSubmit = (e) => {
         e.preventDefault();
 
         addContactToList(nanoid(), name, number);
-
-        setName('')
-        setNumber('')
     }
 
     const nameId = nanoid();
