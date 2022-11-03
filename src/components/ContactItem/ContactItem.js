@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/asyncThunk';
 import style from './ContactItem.module.css';
-import Button from '../Button/Button';
 
 const ContactItem = ({ data }) => {
   const dispatch = useDispatch();
