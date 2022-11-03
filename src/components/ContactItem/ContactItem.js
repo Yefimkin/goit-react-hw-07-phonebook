@@ -6,7 +6,7 @@ import style from './ContactItem.module.css';
 
 const ContactItem = ({ data }) => {
   const dispatch = useDispatch();
-  const { id, name, phone } = data;
+  const { id, name, number } = data;
   const onDeleteClick = (e, id) => {
     if (id === e.target.id) {
       e.target.textContent = 'Deleting...';
@@ -17,7 +17,7 @@ const ContactItem = ({ data }) => {
 
   return (
     <li className={style.contact}>
-      <p>{name}: {phone}</p>
+      <p>{name}: {number}</p>
       <button id={id} onClick={(e) => onDeleteClick(e, id)}>Delete</button>
     </li>
   );
