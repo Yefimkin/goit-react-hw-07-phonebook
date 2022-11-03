@@ -7,46 +7,92 @@ import Button from '../Button/Button';
 import style from './ContactForm.module.css';
 import { Loader } from '../Loader/Loader';
 
-function ContactForm() {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+const ContactForm = () => {
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
 
-  const handleInputChange = ({ currentTarget: { name, value } }) => {
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        
+        switch (name) {
+            case 'name':
+                setName(value)
+                break;
+            case 'number':
+                setNumber(value)
+                break;
+          default:
+        }
     }
-  };
 
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+    const dispatch = useDispatch();
+    const {items, addingLoader} = useSelector(getContacts);
 
-  const contactIsExist = (name, number) => {
-    return contacts.find((contacts) => contacts.name.toLocaleLowerCase() === name.toLocaleLowerCase() || contacts.number === number);
-  }
-
-  const addContacts = (name, number) => {
-    if (contactIsExist(name, number)) {
-      return alert(`${name} ${number} is already in Phonebook`);
+    const contactAlreadyExists = (name, number) => {
+        return items.find((item) => item.name.toLocaleLowerCase() === name.toLocaleLowerCase() || item.number === number);
     }
-    dispatch(addContact({ name, number }));
-      setName('');
-      setNumber('');
-  }
 
-  const onFormSubmit = e => {
-    e.preventDefault();
-    addContacts(name, number);
+    const addContactToList = (id, name, number) => {
+        if (contactAlreadyExists(name, number)) {
+            return alert(`${name} ${number} is already in Phonebook`)
+        }
+
+        dispatch(addContact({ id, name, number }));
+    }
+
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+
+        addContactToList(nanoid(), name, number);
+
+        setName('')
+        setNumber('')
+    }
+
+    const nameId = nanoid();
+    const numberId = nanoid();
+
+
+// function ContactForm() {
+//   const [name, setName] = useState('');
+//   const [number, setNumber] = useState('');
+
+//   const handleInputChange = ({ currentTarget: { name, value } }) => {
+//     switch (name) {
+//       case 'name':
+//         setName(value);
+//         break;
+//       case 'number':
+//         setNumber(value);
+//         break;
+//       default:
+//     }
+//   };
+
+//   const dispatch = useDispatch();
+//   const contacts = useSelector(getContacts);
+
+//   const contactIsExist = (name, number) => {
+//     return contacts.find((contacts) => contacts.name.toLocaleLowerCase() === name.toLocaleLowerCase() || contacts.number === number);
+//   }
+
+//   const addContacts = (name, number) => {
+//     if (contactIsExist(name, number)) {
+//       return alert(`${name} ${number} is already in Phonebook`);
+//     }
+//     dispatch(addContact({ name, number }));
+//       setName('');
+//       setNumber('');
+//   }
+
+//   const onFormSubmit = e => {
+//     e.preventDefault();
+//     addContacts(name, number);
     
-  };
+//   };
 
-  const nameId = nanoid();
-  const numberId = nanoid();
+//   const nameId = nanoid();
+//   const numberId = nanoid();
 
   return (
     <form onSubmit={onFormSubmit}>
@@ -74,14 +120,14 @@ function ContactForm() {
           required
           className={style.input}
       />
-      
-        <Loader /> 
+      {addingLoader ?
+        <Loader /> :
         <Button
           text="Add Contact"
           type="submit"
           disabled={number && name ? false : true}
         />
-      
+      }
     </form>
   );
 }

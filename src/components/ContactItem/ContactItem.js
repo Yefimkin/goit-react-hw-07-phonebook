@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 
 const ContactItem = ({ data }) => {
   const dispatch = useDispatch();
-  const { id, name, number } = data;
+  const { id, name, phone } = data;
   const onDeleteClick = (e, id) => {
     if (id === e.target.id) {
       e.target.textContent = 'Deleting...';
@@ -18,12 +18,8 @@ const ContactItem = ({ data }) => {
 
   return (
     <li className={style.contact}>
-      <p>{name}{number}</p>
-      <Button
-        onClick={() => dispatch(onDeleteClick(id))}
-        text="Delete"
-        type="button"
-      />
+      <p>{name}: {phone}</p>
+      <button id={id} onClick={(e) => onDeleteClick(e, id)}>Delete</button>
     </li>
   );
 }

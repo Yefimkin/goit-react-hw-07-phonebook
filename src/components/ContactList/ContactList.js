@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchContacts } from 'redux/asyncThunk'
@@ -14,37 +13,55 @@ const ContactList = () => {
         dispatch(fetchContacts());
     }, [dispatch]);
 
-    const {contacts} = useSelector(getContacts);
+    const {items, error, isLoading} = useSelector(getContacts);
     const filter = useSelector(getFilter);
 
-    const filteredContacts = () => {
-        if (!contacts) {
-            return;
+    const getFilteredContacts = () => {
+        if (!filter) {
+            return items;
         }
-        return contacts.filter(contact =>
-            contact.name.toLowerCase().includes(filter.toLowerCase())
-        );
+        
+        return items.filter(({name}) => name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
     }
 
-    const filterContacts = filteredContacts();
+    const contactsToRender = getFilteredContacts()
 
     return <ul className={style.li}>
-        
-        {filterContacts.map(item =>
-            <ContactItem key={item.id} data={item} />)}
-        </ul>
+        {isLoading && <div>Loading...</div>}
+        {error && <div>Something went wrong, please, try again</div>}
+        {contactsToRender.map(item =>
+            <ContactItem key={item.id} data={item} />)
+        }
+    </ul>
 }
 
 export default ContactList;
 
-ContactList.defaultProps = {
-    contacts: []
-}
+// const ContactList = () => {
+//     const dispatch = useDispatch();
 
-ContactList.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        phone: PropTypes.string.isRequired,
-    }))
-}
+//     useEffect(() => {
+//         dispatch(fetchContacts());
+//     }, [dispatch]);
+
+//     const contacts = useSelector(getContacts);
+//     const filter = useSelector(getFilter);
+
+//     const getFilteredContacts = () => {
+//         if (!filter) {
+//             return contacts;
+//         }
+//         return contacts?.filter(({ name }) => name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()));
+//     }
+
+//     const contactsToRender = getFilteredContacts()
+//     // console.log(contacts)
+
+//     return <ul className={style.li}>
+        
+//         {contactsToRender?.map(contacts =>
+//             <ContactItem key={contacts.id} data={contacts} />)}
+//         </ul>
+// }
+
+// export default ContactList;
